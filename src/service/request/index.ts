@@ -73,6 +73,7 @@ class Request {
       if (config.interceptors?.requestInterceptor) {
         config = config.interceptors.requestInterceptor(config);
       }
+
       if (config.showLoading === false) {
         this.showLoading = config.showLoading;
       }
@@ -86,7 +87,7 @@ class Request {
           resolve(res);
         })
         .catch((err) => {
-          this.showLoading = DEFAULT_LOADING;
+          this.showLoading = DEFAULT_LOADING; // 请求失败也要初始化
           return reject(err);
         });
     });

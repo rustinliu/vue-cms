@@ -1,20 +1,102 @@
 <template>
-  <div>
-    <span>login</span>
-    <el-button>默认按钮</el-button>
-    <el-button type="primary">主要按钮</el-button>
-    <el-button type="success">成功按钮</el-button>
-  </div>
+
+
+    <div class="login-wrapper">
+
+
+        <div class="login-box">
+
+
+            <img src="@/assets/img/img.png" class="nice-logo" alt="" />
+
+
+            <p>VUE后台管理</p>
+
+
+            <login-panel />
+
+
+            <div class="account-control">
+
+
+                <el-checkbox v-model="isKeepPassword">记住密码</el-checkbox>
+
+
+                <el-link type="primary">忘记密码</el-link>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
 </template>
 
+
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from 'vue';
+import LoginPanel from '@/components/login/loginPanel.vue';
 
 export default defineComponent({
-  setup() {
-    return {};
-  }
+    components: { LoginPanel },
+    setup() {
+        const isKeepPassword = ref(false);
+        return {
+            isKeepPassword,
+        };
+    },
 });
 </script>
 
-<style scoped></style>
+
+<style lang="scss" scoped>
+.login-wrapper {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background: #6563a0 url('../../assets/img/login-bg.svg') center bottom no-repeat;
+
+    .login-box {
+        overflow: hidden;
+        height: 486px;
+        position: relative;
+        width: 350px;
+        max-width: 350px;
+        margin: 4em auto;
+        border-radius: 8px;
+        box-shadow: 1px 2px 15px rgba(0, 0, 0, 0.3);
+        background: #fff url('../../assets/img/logbg.jpg') no-repeat bottom;
+        text-align: center;
+        z-index: 80;
+
+        .nice-logo {
+            width: 55px;
+            margin: 40px 0 0;
+        }
+
+        p {
+            font-size: 26px;
+            color: #8742d1;
+            margin-bottom: 35px;
+        }
+    }
+
+    .account-control {
+        padding: 8px 60px;
+        display: flex;
+        align-content: center;
+        justify-content: space-between;
+        text-align: center;
+    }
+}
+</style>
+
+
