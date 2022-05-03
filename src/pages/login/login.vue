@@ -10,22 +10,25 @@
             <img src="@/assets/img/img.png" class="nice-logo" alt="" />
 
 
-            <p>VUE后台管理</p>
+            <p>后台管理</p>
 
 
-            <login-panel />
+            <login-panel ref="loginAccountRef" />
 
 
             <div class="account-control">
 
 
-                <el-checkbox v-model="isKeepPassword">记住密码</el-checkbox>
+                <el-checkbox v-model="isRememberPassword">记住密码</el-checkbox>
 
 
                 <el-link type="primary">忘记密码</el-link>
 
 
             </div>
+
+
+            <el-button type="primary" @click="handleLogin" class="login-btn">立即登录</el-button>
 
 
         </div>
@@ -44,9 +47,15 @@ import LoginPanel from '@/components/login/loginPanel.vue';
 export default defineComponent({
     components: { LoginPanel },
     setup() {
-        const isKeepPassword = ref(false);
+        const isRememberPassword = ref(false);
+        const loginAccountRef = ref<InstanceType<typeof LoginPanel>>();
+        const handleLogin = () => {
+            loginAccountRef.value?.loginAction();
+        };
         return {
-            isKeepPassword,
+            isRememberPassword,
+            loginAccountRef,
+            handleLogin,
         };
     },
 });
@@ -95,6 +104,11 @@ export default defineComponent({
         align-content: center;
         justify-content: space-between;
         text-align: center;
+    }
+
+    .login-btn {
+        width: 65%;
+        margin-top: 10px;
     }
 }
 </style>
