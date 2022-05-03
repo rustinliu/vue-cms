@@ -5,7 +5,7 @@
         <el-input v-model="accountFrom.account" />
       </el-form-item>
       <el-form-item label="密码" prop="password">
-        <el-input v-model="accountFrom.password" />
+        <el-input v-model="accountFrom.password" :show-password="true" />
       </el-form-item>
     </el-form>
   </div>
@@ -15,18 +15,30 @@
 import { defineComponent, reactive, ref } from "vue";
 import { rules } from "./config";
 import { ElForm } from "element-plus";
+import localCache from "@/utils/cache";
 
 export default defineComponent({
   name: "loginPanel",
   setup() {
     const accountFrom = reactive({
-      account: "",
-      password: ""
+      account: localCache.getCache("account") ?? "",
+      password: localCache.getCache("password") ?? ""
     });
+
     const formRef = ref<InstanceType<typeof ElForm>>();
-    const loginAction = () => {
+
+    const loginAction = (isRememberPassword: boolean) => {
       formRef.value?.validate((valid) => {
         if (valid) {
+          // 是否需要记住密码
+          if (isRememberPassword) {
+            localCache.setCache("account", accountFrom.account);
+            localCache.setCache("password", accountFrom.password);
+          } else {
+            localCache.removeCache("account");
+            localCache.removeCache("password");
+          }
+
           console.log("loginAction 触发了");
         }
       });
