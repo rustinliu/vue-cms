@@ -16,10 +16,12 @@ import { defineComponent, reactive, ref } from "vue";
 import { rules } from "./config";
 import { ElForm } from "element-plus";
 import localCache from "@/utils/cache";
+import { useStore } from "vuex";
 
 export default defineComponent({
   name: "loginPanel",
   setup() {
+    const store = useStore();
     const accountFrom = reactive({
       account: localCache.getCache("account") ?? "",
       password: localCache.getCache("password") ?? ""
@@ -38,8 +40,7 @@ export default defineComponent({
             localCache.removeCache("account");
             localCache.removeCache("password");
           }
-
-          console.log("loginAction 触发了");
+          store.dispatch("login/accountLoginAction", accountFrom);
         }
       });
     };
