@@ -1,20 +1,25 @@
 import Request from "./request";
-import { BASE_URL, isWithCredentials, TIME_OUT } from "@/service/request/config";
+import { BASE_URL, TIME_OUT } from "@/service/request/config";
+import localCache from "@/utils/cache";
 
-const request1 = new Request({
+const request = new Request({
   baseURL: BASE_URL,
   timeout: TIME_OUT,
-  withCredentials: isWithCredentials, // 允许跨域携带着cookie
+  // withCredentials: isWithCredentials, // 允许跨域携带着cookie
   interceptors: {
     requestInterceptor(config) {
-      // console.log("请求拦截 config:", config);
+      // 处理请求拦截
+      const token = localCache.getCache("token");
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
       return config;
     },
     responseInterceptor(res) {
-      // console.log("相应拦截 res:", res);
+      // 处理响应拦截
       return res;
     }
   }
 });
 // const request2 = new Request();
-export { request1 };
+export { request };
