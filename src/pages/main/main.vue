@@ -42,7 +42,6 @@ export default defineComponent({
   .main-aside {
     overflow-x: hidden;
     overflow-y: auto;
-    line-height: 200px;
     text-align: left;
     cursor: pointer;
     background-color: #344058;

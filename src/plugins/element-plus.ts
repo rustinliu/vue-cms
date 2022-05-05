@@ -1,6 +1,5 @@
 import type { App } from "vue";
 import "element-plus/lib/theme-chalk/base.css";
-import { UserFilled, Share } from "@element-plus/icons";
 import {
   ElButton,
   ElInput,
@@ -11,7 +10,16 @@ import {
   ElFormItem,
   ElCheckbox,
   ElRadio,
-  ElLink
+  ElLink,
+  ElMessage,
+  ElMain,
+  ElContainer,
+  ElHeader,
+  ElAside,
+  ElMenu,
+  ElMenuItem,
+  ElMenuItemGroup,
+  ElSubmenu
 } from "element-plus";
 
 const components = [
@@ -24,13 +32,20 @@ const components = [
   ElFormItem,
   ElLink,
   ElRadio,
-  ElCheckbox
+  ElCheckbox,
+  ElMessage,
+  ElMain,
+  ElContainer,
+  ElHeader,
+  ElAside,
+  ElMenu,
+  ElMenuItem,
+  ElMenuItemGroup,
+  ElSubmenu
 ];
 
-const iconComponents = [UserFilled, Share];
-
 export default function registerElementPlus(app: App): void {
-  for (const component of [...components, ...iconComponents]) {
+  for (const component of components) {
     app.component(component.name, component);
   }
 }
