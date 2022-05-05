@@ -1,13 +1,19 @@
 <template>
   <div class="nav-menu">
     <div class="logo">
-      <img class="img" src="~@/assets/img/logo.svg" alt="logo" />
-      <span class="title">后台管理</span>
+      <img
+        class="img"
+        src="~@/assets/img/logo.svg"
+        alt="logo"
+        :style="collapse ? 'padding: 12px 10px 8px 7px' : 'padding: 12px 10px 8px 36px'"
+      />
+      <span v-show="!collapse" class="title">后台管理</span>
     </div>
     <el-menu
       default-active="2"
       class="el-menu-vertical"
       background-color="#30333c"
+      :collapse="collapse"
       text-color="#b7bdc3"
       active-text-color="#ffd04b"
     >
@@ -46,6 +52,12 @@ import { useStore } from "@/store";
 
 export default defineComponent({
   name: "navMenu",
+  props: {
+    collapse: {
+      type: Boolean,
+      default: false
+    }
+  },
   setup() {
     const store = useStore();
     const userMenus = computed(() => store.state.login.userMenus);
@@ -64,7 +76,7 @@ export default defineComponent({
   .logo {
     display: flex;
     height: 48px;
-    padding: 12px 10px 8px 36px;
+    //padding: 12px 10px 8px 36px;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
