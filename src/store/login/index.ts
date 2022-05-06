@@ -1,7 +1,8 @@
 import type { Module } from "vuex";
-import type { ILoginStore } from "./type";
+import type { ILoginStore, IUserMenuItem } from "./type";
 import type { IRootStore } from "@/store/type";
 import type { IAccount } from "@/service/api/type";
+import { mapMenusToRoutes } from "@/utils/mapMenus";
 
 import { fetchUserInfo, fetchUserMenusByRoleId, loginAccount } from "@/service/api/loginApi";
 import localCache from "@/utils/cache";
@@ -22,8 +23,11 @@ const loginStore: Module<ILoginStore, IRootStore> = {
     saveUserInfo(state, userInfo: any) {
       state.userInfo = userInfo;
     },
-    saveUserMenus(state, userMenus: any[]) {
+    saveUserMenus(state, userMenus: IUserMenuItem[]) {
       state.userMenus = userMenus;
+      const routes = mapMenusToRoutes(userMenus);
+      console.log("routes", routes);
+      routes.forEach((route) => router.addRoute("main", route));
     }
   },
   actions: {

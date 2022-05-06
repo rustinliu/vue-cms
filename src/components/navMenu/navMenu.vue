@@ -27,7 +27,7 @@
               <span>{{ item.name }}</span>
             </template>
             <template v-for="submenu in item.children" :key="submenu.id">
-              <el-menu-item :index="submenu.id + ''">
+              <el-menu-item :index="submenu.id + ''" @click="handleClickMenuItem(submenu)">
                 <i v-if="submenu.icon" :class="submenu.icon"></i>
                 <span>{{ submenu.name }}</span>
               </el-menu-item>
@@ -49,6 +49,8 @@
 <script lang="ts">
 import { defineComponent, computed } from "vue";
 import { useStore } from "@/store";
+import { useRouter } from "vue-router";
+import { IUserMenuItem } from "@/store/login/type";
 
 export default defineComponent({
   name: "navMenu",
@@ -60,9 +62,17 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
+    const router = useRouter();
     const userMenus = computed(() => store.state.login.userMenus);
+    const handleClickMenuItem = (submenu: IUserMenuItem) => {
+      console.log("submenu", submenu);
+      router.push({
+        path: submenu.url ?? "/no-fount"
+      });
+    };
     return {
-      userMenus
+      userMenus,
+      handleClickMenuItem
     };
   }
 });
@@ -88,7 +98,7 @@ export default defineComponent({
     }
 
     .title {
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 700;
       color: white;
     }
