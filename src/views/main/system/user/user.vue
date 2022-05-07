@@ -1,16 +1,19 @@
 <template>
   <div class="user">
-    <h2>user</h2>
+    <pf-form v-bind="searchFormConfig" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import PfForm from "@/components/commonForm";
+import { searchFormConfig } from "./config";
 
 export default defineComponent({
   name: "user",
+  components: { PfForm },
   setup() {
-    return {};
+    return { searchFormConfig };
   }
 });
 </script>
