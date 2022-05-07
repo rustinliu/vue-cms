@@ -19,7 +19,11 @@ import {
   ElMenu,
   ElMenuItem,
   ElMenuItemGroup,
-  ElSubmenu
+  ElSubmenu,
+  ElDropdown,
+  ElDropdownMenu,
+  ElDropdownItem,
+  ElAvatar
 } from "element-plus";
 
 const components = [
@@ -41,10 +45,15 @@ const components = [
   ElMenu,
   ElMenuItem,
   ElMenuItemGroup,
-  ElSubmenu
+  ElSubmenu,
+  ElDropdown,
+  ElDropdownMenu,
+  ElDropdownItem,
+  ElAvatar
 ];
 
 export default function registerElementPlus(app: App): void {
+  app.config.globalProperties.$ElMessage = ElMessage;
   for (const component of components) {
     app.component(component.name, component);
   }

@@ -7,6 +7,7 @@ import { mapMenusToRoutes } from "@/utils/mapMenus";
 import { fetchUserInfo, fetchUserMenusByRoleId, loginAccount } from "@/service/api/loginApi";
 import localCache from "@/utils/cache";
 import router from "@/router";
+import { ElMessage } from "element-plus";
 
 const loginStore: Module<ILoginStore, IRootStore> = {
   namespaced: true,
@@ -26,7 +27,7 @@ const loginStore: Module<ILoginStore, IRootStore> = {
     saveUserMenus(state, userMenus: IUserMenuItem[]) {
       state.userMenus = userMenus;
       const routes = mapMenusToRoutes(userMenus);
-      console.log("routes", routes);
+
       routes.forEach((route) => router.addRoute("main", route));
     }
   },
@@ -50,6 +51,7 @@ const loginStore: Module<ILoginStore, IRootStore> = {
 
       // 4. 跳转到首页
       await router.push("/main");
+      ElMessage.success("登录成功！");
     },
     loadLocalLoginData({ commit }) {
       const token = localCache.getCache("token");
@@ -64,6 +66,13 @@ const loginStore: Module<ILoginStore, IRootStore> = {
       if (userMenus) {
         commit("saveUserMenus", userMenus);
       }
+    },
+
+    async userLogout() {
+      localCache.clearCache();
+
+      await router.replace("/login");
+      ElMessage.success("退出登录成功！");
     }
   }
 };
