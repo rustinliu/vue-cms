@@ -1,5 +1,6 @@
 import { IUserMenuItem } from "@/store/login/type";
 import type { RouteRecordRaw } from "vue-router";
+import { IBreadcrumb } from "@/components/commonBreadcrumb";
 
 let firstMenu: any = null;
 export const mapMenusToRoutes = (userMenus: IUserMenuItem[]): RouteRecordRaw[] => {
@@ -32,11 +33,17 @@ export const mapMenusToRoutes = (userMenus: IUserMenuItem[]): RouteRecordRaw[] =
   return routes;
 };
 type ICurrentMenu = IUserMenuItem | undefined;
-export const pathMapToMenus = (userMenus: IUserMenuItem[], currentPath: string): ICurrentMenu => {
+export const pathMapToMenus = (
+  userMenus: IUserMenuItem[],
+  currentPath: string,
+  breadcrumbs?: IBreadcrumb[]
+): ICurrentMenu => {
   for (const menu of userMenus) {
     if (menu.type === 1) {
       const findMenu = pathMapToMenus(menu.children ?? [], currentPath);
       if (findMenu) {
+        breadcrumbs?.push({ name: menu.name });
+        breadcrumbs?.push({ name: findMenu.name });
         return findMenu;
       }
     } else if (menu.type === 2 && currentPath === menu.url) {
@@ -44,5 +51,12 @@ export const pathMapToMenus = (userMenus: IUserMenuItem[], currentPath: string):
     }
   }
 };
-
+export const pathMapToBreadcrumb = (
+  userMenus: IUserMenuItem[],
+  currentPath: string
+): IBreadcrumb[] => {
+  const breadcrumbs: IBreadcrumb[] = [];
+  pathMapToMenus(userMenus, currentPath, breadcrumbs);
+  return breadcrumbs;
+};
 export { firstMenu };
