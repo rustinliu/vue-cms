@@ -10,7 +10,7 @@ import { registerPlugins } from "@/plugins";
 
 const app = createApp(App);
 app.use(registerPlugins);
-app.use(router);
 app.use(store);
 stepStore();
+app.use(router);
 app.mount("#app");
