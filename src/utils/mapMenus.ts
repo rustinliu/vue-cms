@@ -1,6 +1,7 @@
 import { IUserMenuItem } from "@/store/login/type";
 import type { RouteRecordRaw } from "vue-router";
 
+let firstMenu: any = null;
 export const mapMenusToRoutes = (userMenus: IUserMenuItem[]): RouteRecordRaw[] => {
   const routes: RouteRecordRaw[] = [];
 
@@ -21,9 +22,27 @@ export const mapMenusToRoutes = (userMenus: IUserMenuItem[]): RouteRecordRaw[] =
 
       const route = allRoutes.find((item) => item.path === menu.url);
       if (route) routes.push(route);
+      if (!firstMenu) {
+        firstMenu = menu;
+      }
     }
   };
 
   _recurseGetRoute(userMenus);
   return routes;
 };
+type ICurrentMenu = IUserMenuItem | undefined;
+export const pathMapToMenus = (userMenus: IUserMenuItem[], currentPath: string): ICurrentMenu => {
+  for (const menu of userMenus) {
+    if (menu.type === 1) {
+      const findMenu = pathMapToMenus(menu.children ?? [], currentPath);
+      if (findMenu) {
+        return findMenu;
+      }
+    } else if (menu.type === 2 && currentPath === menu.url) {
+      return menu;
+    }
+  }
+};
+
+export { firstMenu };

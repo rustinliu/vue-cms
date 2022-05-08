@@ -10,7 +10,7 @@
       <span v-show="!collapse" class="title">后台管理</span>
     </div>
     <el-menu
-      default-active="2"
+      :default-active="defaultValue"
       class="el-menu-vertical"
       background-color="#30333c"
       :collapse="collapse"
@@ -47,10 +47,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from "vue";
+import { defineComponent, computed, ref } from "vue";
 import { useStore } from "@/store";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { IUserMenuItem } from "@/store/login/type";
+import { pathMapToMenus } from "@/utils/mapMenus";
 
 export default defineComponent({
   name: "navMenu",
@@ -63,7 +64,13 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const router = useRouter();
+    const route = useRoute();
     const userMenus = computed(() => store.state.login.userMenus);
+
+    const currentPath = route.path;
+    const currentMenu = pathMapToMenus(userMenus.value, currentPath);
+    const defaultValue = ref(currentMenu?.id + "");
+
     const handleClickMenuItem = (submenu: IUserMenuItem) => {
       console.log("submenu", submenu);
       router.push({
@@ -71,6 +78,7 @@ export default defineComponent({
       });
     };
     return {
+      defaultValue,
       userMenus,
       handleClickMenuItem
     };
