@@ -6,18 +6,34 @@
           <el-col v-bind="colLayout">
             <el-form-item :label="item.label" :rules="item.rules" :style="itemStyle">
               <template v-if="item.type === 'input' || item.type === 'password'">
-                <el-input :placeholder="item.placeholder" :show-password="item.type === 'password'">
+                <el-input
+                  :placeholder="item.placeholder"
+                  :show-password="item.type === 'password'"
+                  v-model="formData[`${item.field}`]"
+                >
                 </el-input>
               </template>
               <template v-else-if="item.type === 'select'">
-                <el-select :placeholder="item.placeholder" style="width: 100%">
-                  <el-option v-for="option in item.selectOptions" :key="option.value">
+                <el-select
+                  :placeholder="item.placeholder"
+                  v-model="formData[`${item.field}`]"
+                  style="width: 100%"
+                >
+                  <el-option
+                    v-for="option in item.selectOptions"
+                    :key="option.value"
+                    :value="option.title"
+                  >
                     {{ option.title }}
                   </el-option>
                 </el-select>
               </template>
               <template v-else-if="item.type === 'datepicker'">
-                <el-date-picker style="width: 100%" v-bind="item.placeholder"></el-date-picker>
+                <el-date-picker
+                  style="width: 100%"
+                  v-bind="item.placeholder"
+                  v-model="formData[`${item.field}`]"
+                ></el-date-picker>
               </template>
             </el-form-item>
           </el-col>
@@ -28,11 +44,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent, PropType, ref, watch } from "vue";
 import { IFormItem } from "../type";
 
 export default defineComponent({
   props: {
+    modelValue: {
+      type: Object,
+      require: true
+    },
     formItems: {
       type: Array as PropType<IFormItem[]>,
       default: () => []
@@ -56,8 +76,11 @@ export default defineComponent({
       })
     }
   },
-  setup() {
-    return {};
+  emits: ["update:modelValue"],
+  setup(props, { emit }) {
+    const formData = ref({ ...props.modelValue }); // 相当于从父组件中穿过来的对象进行了深拷贝
+    watch(formData, (newValue) => emit("update:modelValue", newValue), { deep: true });
+    return { formData };
   }
 });
 </script>
