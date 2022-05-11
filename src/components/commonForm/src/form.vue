@@ -34,7 +34,7 @@
               <template v-else-if="item.type === 'datepicker'">
                 <el-date-picker
                   style="width: 100%"
-                  v-bind="item.placeholder"
+                  v-bind="item.dateOptions"
                   v-model="formData[`${item.field}`]"
                 ></el-date-picker>
               </template>
