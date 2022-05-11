@@ -1,6 +1,15 @@
 <template>
   <div class="user">
-    <pf-form v-bind="searchFormConfig" v-model="formData" />
+    <pf-form v-bind="searchFormConfig" v-model="formData">
+      <template #header>
+        <h2>高级检索</h2>
+      </template>
+      <template #footer>
+        <div class="footer_btn">
+          <el-button>重置</el-button>
+        </div>
+      </template>
+    </pf-form>
   </div>
 </template>
 
@@ -26,4 +35,14 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+h2 {
+  font-size: 28px;
+}
+
+.footer_btn {
+  text-align: right;
+  padding-bottom: 12px;
+  padding-right: 12px;
+}
+</style>

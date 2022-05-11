@@ -1,5 +1,8 @@
 <template>
-  <div class="pf_form">
+  <section class="pf_form">
+    <section class="header">
+      <slot name="header"></slot>
+    </section>
     <el-form :label-width="labelWidth">
       <el-row>
         <template v-for="item in formItems" :key="item.label">
@@ -40,7 +43,10 @@
         </template>
       </el-row>
     </el-form>
-  </div>
+    <section class="footer">
+      <slot name="footer"></slot>
+    </section>
+  </section>
 </template>
 
 <script lang="ts">
@@ -72,7 +78,7 @@ export default defineComponent({
         sm: 24,
         md: 12,
         lg: 8,
-        xl: 6
+        xl: 8
       })
     }
   },
