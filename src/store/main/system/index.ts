@@ -19,9 +19,7 @@ const systemStore: Module<ISystemStore, IRootStore> = {
   },
   actions: {
     async fetchPageListActions({ commit }, payload: IPagePayload) {
-      console.log("payload", payload);
       const pageResult = await fetchPageListData(payload.pageUrl, payload.queryInfo);
-      console.log("pageResult", pageResult);
 
       const { list, totalCount } = pageResult.data;
 

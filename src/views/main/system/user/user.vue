@@ -1,18 +1,24 @@
 <template>
   <div class="user">
     <page-search :search-form-config="searchFormConfig" />
+    <pf-table :list-data="userList" :prop-list="propListConfig">
+      <template #status="scope">
+        <el-button>{{ scope.row.enable ? "启用" : "禁用" }}</el-button>
+      </template>
+    </pf-table>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { computed, defineComponent } from "vue";
 import { useStore } from "@/store";
-import { searchFormConfig } from "./config";
+import { searchFormConfig, propListConfig } from "./config";
 import PageSearch from "@/components/pageSearch/pageSearch.vue";
+import PfTable from "@/components/commonTable";
 
 export default defineComponent({
   name: "user",
-  components: { PageSearch },
+  components: { PageSearch, PfTable },
   setup() {
     const store = useStore();
     store.dispatch("system/fetchPageListActions", {
@@ -22,7 +28,9 @@ export default defineComponent({
         size: 10
       }
     });
-    return { searchFormConfig };
+    const userList = computed(() => store.state.system.userList);
+    console.log("userList", userList);
+    return { searchFormConfig, userList, propListConfig };
   }
 });
 </script>
