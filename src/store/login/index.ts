@@ -1,10 +1,10 @@
 import type { Module } from "vuex";
 import type { ILoginStore, IUserMenuItem } from "./type";
 import type { IRootStore } from "@/store/type";
-import type { IAccount } from "@/service/api/type";
+import type { IAccount } from "@/service/login/type";
 import { mapMenusToRoutes } from "@/utils/mapMenus";
 
-import { fetchUserInfo, fetchUserMenusByRoleId, loginAccount } from "@/service/api/loginApi";
+import { fetchUserInfo, fetchUserMenusByRoleId, loginAccount } from "@/service/login/loginApi";
 import localCache from "@/utils/cache";
 import router from "@/router";
 import { ElMessage } from "element-plus";
