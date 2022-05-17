@@ -1,7 +1,13 @@
 <template>
   <div class="user">
     <page-search :search-form-config="searchFormConfig" />
-    <pf-table :list-data="userList" :prop-list="propListConfig">
+    <pf-table
+      :list-data="userList"
+      :prop-list="propListConfig"
+      :is-show-index-column="isShowIndexColumn"
+      :is-show-select-column="isShowSelectColumn"
+      @selectChange="selectChange"
+    >
       <template #status="scope">
         <el-button plain size="mini" :type="scope.row.enable ? 'success' : 'danger'">
           {{ scope.row.enable ? "启用" : "禁用" }}
@@ -12,6 +18,14 @@
       </template>
       <template #updateAt="scope">
         <span> {{ $filters.formatTime(scope.row.updateAt) }} </span>
+      </template>
+      <template #handler>
+        <div>
+          <el-button type="text" size="mini" icon="el-icon-edit">编辑</el-button>
+          <el-button type="text" size="mini" icon="el-icon-delete" style="color: red">
+            删除
+          </el-button>
+        </div>
       </template>
     </pf-table>
   </div>
@@ -37,8 +51,19 @@ export default defineComponent({
       }
     });
     const userList = computed(() => store.state.system.userList);
-    console.log("userList", userList);
-    return { searchFormConfig, userList, propListConfig };
+    const isShowIndexColumn = true;
+    const isShowSelectColumn = true;
+    const selectChange = (value: any) => {
+      console.log(value);
+    };
+    return {
+      searchFormConfig,
+      userList,
+      propListConfig,
+      isShowIndexColumn,
+      isShowSelectColumn,
+      selectChange
+    };
   }
 });
 </script>

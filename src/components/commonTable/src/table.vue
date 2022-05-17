@@ -1,8 +1,21 @@
 <template>
   <section class="pf_table">
-    <el-table :data="listData" stripe style="width: 100%">
+    <el-table :data="listData" stripe style="width: 100%" @selection-change="handleSelectChange">
+      <el-table-column
+        v-if="isShowSelectColumn"
+        type="selection"
+        align="center"
+        width="60"
+      ></el-table-column>
+      <el-table-column
+        v-if="isShowIndexColumn"
+        type="index"
+        label="序号"
+        width="80"
+        align="center"
+      ></el-table-column>
       <template v-for="item in propList" :key="item.prop">
-        <el-table-column v-bind="item">
+        <el-table-column v-bind="item" align="center">
           <template #default="scope">
             <slot :name="item.slotName" :row="scope.row">
               {{ scope.row[item.prop] }}
@@ -26,10 +39,22 @@ export default defineComponent({
     propList: {
       type: Array,
       required: true
+    },
+    isShowIndexColumn: {
+      type: Boolean,
+      default: false
+    },
+    isShowSelectColumn: {
+      type: Boolean,
+      default: false
     }
   },
-  setup() {
-    return {};
+  emits: ["selectChange"],
+  setup(props, { emit }) {
+    const handleSelectChange = (value: any) => {
+      emit("selectChange", value);
+    };
+    return { handleSelectChange };
   }
 });
 </script>
