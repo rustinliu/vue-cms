@@ -3,7 +3,7 @@ import type { RouteRecordRaw } from "vue-router";
 import { IBreadcrumb } from "@/components/commonBreadcrumb";
 
 let firstMenu: any = null;
-export const mapMenusToRoutes = (userMenus: IUserMenuItem[]): RouteRecordRaw[] => {
+const mapMenusToRoutes = (userMenus: IUserMenuItem[]): RouteRecordRaw[] => {
   const routes: RouteRecordRaw[] = [];
 
   // 1. 加载所有的 routes
@@ -32,8 +32,9 @@ export const mapMenusToRoutes = (userMenus: IUserMenuItem[]): RouteRecordRaw[] =
   _recurseGetRoute(userMenus);
   return routes;
 };
+
 type ICurrentMenu = IUserMenuItem | undefined;
-export const pathMapToMenus = (
+const pathMapToMenus = (
   userMenus: IUserMenuItem[],
   currentPath: string,
   breadcrumbs?: IBreadcrumb[]
@@ -51,12 +52,10 @@ export const pathMapToMenus = (
     }
   }
 };
-export const pathMapToBreadcrumb = (
-  userMenus: IUserMenuItem[],
-  currentPath: string
-): IBreadcrumb[] => {
+const pathMapToBreadcrumb = (userMenus: IUserMenuItem[], currentPath: string): IBreadcrumb[] => {
   const breadcrumbs: IBreadcrumb[] = [];
   pathMapToMenus(userMenus, currentPath, breadcrumbs);
   return breadcrumbs;
 };
-export { firstMenu };
+
+export { mapMenusToRoutes, pathMapToMenus, pathMapToBreadcrumb, firstMenu };
