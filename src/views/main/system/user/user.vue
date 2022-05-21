@@ -1,77 +1,23 @@
 <template>
   <div class="user">
     <page-search :search-form-config="searchFormConfig" />
-    <pf-table
-      :list-data="userList"
-      :prop-list="propListConfig"
-      :is-show-index-column="isShowIndexColumn"
-      :is-show-select-column="isShowSelectColumn"
-      @selectChange="selectChange"
-      title="用户列表"
-    >
-      <template #headerHandle>
-        <div>
-          <el-button type="primary" size="medium">新建用户</el-button>
-          <el-button icon="el-icon-refresh"></el-button>
-        </div>
-      </template>
-
-      <!-- 表格插槽 -->
-      <template #status="scope">
-        <el-button plain size="mini" :type="scope.row.enable ? 'success' : 'danger'">
-          {{ scope.row.enable ? "启用" : "禁用" }}
-        </el-button>
-      </template>
-      <template #createAt="scope">
-        <span> {{ $filters.formatTime(scope.row.createAt) }} </span>
-      </template>
-      <template #updateAt="scope">
-        <span> {{ $filters.formatTime(scope.row.updateAt) }} </span>
-      </template>
-      <template #handler>
-        <div>
-          <el-button type="text" size="mini" icon="el-icon-edit">编辑</el-button>
-          <el-button type="text" size="mini" icon="el-icon-delete" style="color: red">
-            删除
-          </el-button>
-        </div>
-      </template>
-    </pf-table>
+    <page-content :content-table-config="contentTableConfig"></page-content>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
-import { useStore } from "@/store";
-import { searchFormConfig, propListConfig } from "./config";
-import PageSearch from "@/components/pageSearch/pageSearch.vue";
-import PfTable from "@/components/commonTable";
+import { defineComponent } from "vue";
+import { searchFormConfig, contentTableConfig } from "./config";
+import PageSearch from "@/components/pageSearch";
+import PageContent from "@/components/pageContent/src/pageContent.vue";
 
 export default defineComponent({
   name: "user",
-  components: { PageSearch, PfTable },
+  components: { PageContent, PageSearch },
   setup() {
-    const store = useStore();
-    store.dispatch("system/fetchPageListActions", {
-      pageUrl: "/users/list",
-      queryInfo: {
-        offset: 0,
-        size: 10
-      }
-    });
-    const userList = computed(() => store.state.system.userList);
-    const isShowIndexColumn = true;
-    const isShowSelectColumn = true;
-    const selectChange = (value: any) => {
-      console.log(value);
-    };
     return {
       searchFormConfig,
-      userList,
-      propListConfig,
-      isShowIndexColumn,
-      isShowSelectColumn,
-      selectChange
+      contentTableConfig
     };
   }
 });

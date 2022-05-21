@@ -22,7 +22,7 @@
         width="80"
         align="center"
       ></el-table-column>
-      <template v-for="item in propList" :key="item.prop">
+      <template v-for="item in propListConfig" :key="item.prop">
         <el-table-column v-bind="item" align="center">
           <template #default="scope">
             <slot :name="item.slotName" :row="scope.row">
@@ -33,7 +33,18 @@
       </template>
     </el-table>
     <section class="footer">
-      <slot name="footer"></slot>
+      <slot name="footer">
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentPage4"
+          :page-sizes="[100, 200, 300, 400]"
+          :page-size="100"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="400"
+        >
+        </el-pagination>
+      </slot>
     </section>
   </section>
 </template>
@@ -51,7 +62,7 @@ export default defineComponent({
       type: Array,
       required: true
     },
-    propList: {
+    propListConfig: {
       type: Array,
       required: true
     },

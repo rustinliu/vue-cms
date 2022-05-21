@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import PfForm from "../commonForm";
+import PfForm from "../../commonForm";
 
 export default defineComponent({
   props: {
