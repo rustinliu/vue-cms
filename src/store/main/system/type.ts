@@ -1,9 +1,11 @@
 export interface ISystemStore {
-  userList: any[];
-  userCount: number;
+  usersList: any[];
+  usersCount: number;
+  roleList: any[];
+  roleCount: number;
 }
 
 export interface IPagePayload {
-  pageUrl: string;
+  pageName: string;
   queryInfo: any;
 }

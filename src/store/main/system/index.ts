@@ -6,25 +6,46 @@ import { fetchPageListData } from "@/service/main/system/systemApi";
 const systemStore: Module<ISystemStore, IRootStore> = {
   namespaced: true,
   state: () => ({
-    userList: [],
-    userCount: 0
+    usersList: [],
+    usersCount: 0,
+    roleList: [],
+    roleCount: 0
   }),
   mutations: {
-    changeUserList(state, userList: any[]) {
-      state.userList = userList;
+    changeUsersList(state, list: any[]) {
+      state.usersList = list;
     },
-    changeUserCount(state, userCount: number) {
-      state.userCount = userCount;
+    changeUserCount(state, count: number) {
+      state.usersCount = count;
+    },
+    changeRoleList(state, list: any[]) {
+      state.roleList = list;
+    },
+    changeRoleCount(state, count: number) {
+      state.roleCount = count;
+    }
+  },
+  getters: {
+    pageListData(state) {
+      return (pageName: string) => {
+        return (state as any)[`${pageName}List`];
+      };
     }
   },
   actions: {
     async fetchPageListActions({ commit }, payload: IPagePayload) {
-      const pageResult = await fetchPageListData(payload.pageUrl, payload.queryInfo);
+      const pageName = payload.pageName;
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const pageUrl = `/${pageName}/list`;
+      const pageResult = await fetchPageListData(pageUrl, payload.queryInfo);
 
       const { list, totalCount } = pageResult.data;
 
-      commit("changeUserList", list);
-      commit("changeUserCount", totalCount);
+      // 首字母转大写
+      const pageNameToCase = pageName.replace(pageName[0], pageName[0].toUpperCase());
+      commit(`change${pageNameToCase}List`, list);
+      commit(`change${pageNameToCase}Count`, totalCount);
     }
   }
 };

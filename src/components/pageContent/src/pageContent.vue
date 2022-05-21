@@ -1,6 +1,6 @@
 <template>
   <div>
-    <pf-table :list-data="userList" v-bind="contentTableConfig" @selectChange="selectChange">
+    <pf-table :list-data="dataList" v-bind="contentTableConfig" @selectChange="selectChange">
       <template #headerHandle>
         <div>
           <el-button type="primary" size="medium">新建用户</el-button>
@@ -40,26 +40,31 @@ import PfTable from "@/components/commonTable";
 export default defineComponent({
   components: { PfTable },
   props: {
+    pageName: {
+      type: String,
+      required: true
+    },
     contentTableConfig: {
       type: Object,
       required: true
     }
   },
-  setup() {
+  setup(props) {
     const store = useStore();
     store.dispatch("system/fetchPageListActions", {
-      pageUrl: "/users/list",
+      pageName: props.pageName,
       queryInfo: {
         offset: 0,
         size: 10
       }
     });
-    const userList = computed(() => store.state.system.userList);
+    const dataList = computed(() => store.getters[`system/pageListData`](props.pageName));
+    console.log(dataList);
     const selectChange = (value: any) => {
       console.log(value);
     };
     return {
-      userList,
+      dataList,
       selectChange
     };
   }

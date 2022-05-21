@@ -1,5 +1,5 @@
-import { IForm } from "@/components/commonForm";
 import { ITable } from "@/components/commonTable/type";
+import { IForm } from "@/components/commonForm";
 
 const searchFormConfig: IForm = {
   itemStyle: { padding: "6px 12px", textAlign: "center" },
@@ -41,18 +41,15 @@ const searchFormConfig: IForm = {
 };
 
 const contentTableConfig: ITable = {
-  title: "用户列表",
+  title: "角色列表",
   isShowIndexColumn: true,
   isShowSelectColumn: true,
   propListConfig: [
-    { prop: "name", label: "用户名", minWidth: "100" },
-    { prop: "realname", label: "真实姓名", minWidth: "100" },
-    { prop: "cellphone", label: "手机号码", minWidth: "100" },
-    { prop: "enable", label: "状态", minWidth: "100", slotName: "status" },
+    { prop: "name", label: "角色名", minWidth: "100" },
+    { prop: "intro", label: "权限", minWidth: "100" },
     { prop: "createAt", label: "创建时间", minWidth: "250", slotName: "createAt" },
     { prop: "updateAt", label: "更新时间", minWidth: "250", slotName: "updateAt" },
     { label: "操作", minWidth: "120", slotName: "handler" }
   ]
 };
-
-export { searchFormConfig, contentTableConfig };
+export { contentTableConfig, searchFormConfig };
