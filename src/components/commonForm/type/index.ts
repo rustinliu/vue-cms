@@ -4,7 +4,7 @@ export interface IFormItem {
   field: string;
   type: IFormType;
   rules?: any[];
-  label: string;
+  label?: string;
   placeholder?: string;
   selectOptions?: any[];
   dateOptions?: any;

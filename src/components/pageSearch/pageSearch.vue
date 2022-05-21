@@ -2,7 +2,7 @@
   <div class="page_search">
     <pf-form v-bind="searchFormConfig" v-model="formData">
       <template #header>
-        <h2>高级检索</h2>
+        <h4>高级检索</h4>
       </template>
       <template #footer>
         <div class="footer_btn">

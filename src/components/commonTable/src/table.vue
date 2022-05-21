@@ -1,5 +1,13 @@
 <template>
   <section class="pf_table">
+    <section class="header">
+      <slot name="header">
+        <span class="title"> {{ title }} </span>
+        <span class="header-handle">
+          <slot name="headerHandle"></slot>
+        </span>
+      </slot>
+    </section>
     <el-table :data="listData" stripe style="width: 100%" @selection-change="handleSelectChange">
       <el-table-column
         v-if="isShowSelectColumn"
@@ -24,6 +32,9 @@
         </el-table-column>
       </template>
     </el-table>
+    <section class="footer">
+      <slot name="footer"></slot>
+    </section>
   </section>
 </template>
 
@@ -32,6 +43,10 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   props: {
+    title: {
+      type: String,
+      default: ""
+    },
     listData: {
       type: Array,
       required: true
@@ -63,5 +78,31 @@ export default defineComponent({
 .pf_table {
   padding: 20px;
   border-top: 24px solid #f0f2f5;
+
+  .header {
+    display: flex;
+    height: 45px;
+    padding: 0 12px;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+
+    .title {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .handler {
+      align-items: center;
+    }
+  }
+
+  .footer {
+    margin-top: 15px;
+
+    .el-pagination {
+      text-align: right;
+    }
+  }
 }
 </style>

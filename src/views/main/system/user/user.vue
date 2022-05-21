@@ -7,7 +7,16 @@
       :is-show-index-column="isShowIndexColumn"
       :is-show-select-column="isShowSelectColumn"
       @selectChange="selectChange"
+      title="用户列表"
     >
+      <template #headerHandle>
+        <div>
+          <el-button type="primary" size="medium">新建用户</el-button>
+          <el-button icon="el-icon-refresh"></el-button>
+        </div>
+      </template>
+
+      <!-- 表格插槽 -->
       <template #status="scope">
         <el-button plain size="mini" :type="scope.row.enable ? 'success' : 'danger'">
           {{ scope.row.enable ? "启用" : "禁用" }}

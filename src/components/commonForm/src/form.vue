@@ -65,11 +65,11 @@ export default defineComponent({
     },
     labelWidth: {
       type: String,
-      default: "100px"
+      default: "0px"
     },
     itemStyle: {
       type: Object,
-      default: () => ({ padding: "10px 20px" })
+      default: () => ({})
     },
     colLayout: {
       type: Object,
@@ -78,7 +78,7 @@ export default defineComponent({
         sm: 24,
         md: 12,
         lg: 8,
-        xl: 8
+        xl: 4
       })
     }
   },
@@ -93,6 +93,13 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .pf_form {
-  padding-top: 22px;
+  padding: 22px 20px 0 20px;
+
+  .header {
+    font-size: 20px;
+    font-weight: 700;
+    text-align: left;
+    padding: 8px 12px;
+  }
 }
 </style>
