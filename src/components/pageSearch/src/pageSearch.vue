@@ -6,11 +6,11 @@
       </template>
       <template #footer>
         <div class="footer_btn">
-          <el-button>
+          <el-button @click="handleReset">
             <i class="el-icon-refresh"></i>
             重置
           </el-button>
-          <el-button type="primary">
+          <el-button type="primary" @click="handleSearch">
             <i class="el-icon-search"></i>
             搜索
           </el-button>
@@ -34,13 +34,25 @@ export default defineComponent({
   components: { PfForm },
   setup(props) {
     const formItems = props.searchFormConfig?.formItems ?? [];
-    const itemOrigins: any = {};
-    for (let item of formItems) {
-      itemOrigins[item.field] = "";
+    const formOriginData: any = {};
+    for (const item of formItems) {
+      formOriginData[item.field] = "";
     }
     // 对象的双向绑定 要使用ref
-    const formData = ref(itemOrigins);
-    return { formData };
+    const formData = ref(formOriginData);
+
+    const handleReset = () => {
+      console.log("重置");
+      formData.value = formOriginData;
+    };
+    const handleSearch = () => {
+      console.log("搜索");
+    };
+    return {
+      formData,
+      handleReset,
+      handleSearch
+    };
   }
 });
 </script>

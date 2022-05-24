@@ -12,14 +12,16 @@
                 <el-input
                   :placeholder="item.placeholder"
                   :show-password="item.type === 'password'"
-                  v-model="formData[`${item.field}`]"
+                  :model-value="modelValue[`${item.field}`]"
+                  @update:modelValue="handleValueChange($event, item.field)"
                 >
                 </el-input>
               </template>
               <template v-else-if="item.type === 'select'">
                 <el-select
                   :placeholder="item.placeholder"
-                  v-model="formData[`${item.field}`]"
+                  :model-value="modelValue[`${item.field}`]"
+                  @update:modelValue="handleValueChange($event, item.field)"
                   style="width: 100%"
                 >
                   <el-option
@@ -35,7 +37,8 @@
                 <el-date-picker
                   style="width: 100%"
                   v-bind="item.dateOptions"
-                  v-model="formData[`${item.field}`]"
+                  :model-value="modelValue[`${item.field}`]"
+                  @update:modelValue="handleValueChange($event, item.field)"
                 ></el-date-picker>
               </template>
             </el-form-item>
@@ -50,7 +53,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, watch } from "vue";
+import { defineComponent, PropType } from "vue";
 import { IFormItem } from "../type";
 
 export default defineComponent({
@@ -84,9 +87,10 @@ export default defineComponent({
   },
   emits: ["update:modelValue"],
   setup(props, { emit }) {
-    const formData = ref({ ...props.modelValue }); // 相当于从父组件中穿过来的对象进行了深拷贝
-    watch(formData, (newValue) => emit("update:modelValue", newValue), { deep: true });
-    return { formData };
+    const handleValueChange = (value: any, field: string) => {
+      emit("update:modelValue", { ...props.modelValue, [field]: value });
+    };
+    return { handleValueChange };
   }
 });
 </script>

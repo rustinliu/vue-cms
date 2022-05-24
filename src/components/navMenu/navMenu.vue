@@ -72,7 +72,6 @@ export default defineComponent({
     const defaultValue = ref(currentMenu?.id + "");
 
     const handleClickMenuItem = (submenu: IUserMenuItem) => {
-      console.log("submenu", submenu);
       router.push({
         path: submenu.url ?? "/no-fount"
       });

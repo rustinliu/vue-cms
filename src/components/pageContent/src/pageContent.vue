@@ -59,7 +59,6 @@ export default defineComponent({
       }
     });
     const dataList = computed(() => store.getters[`system/pageListData`](props.pageName));
-    console.log(dataList);
     const selectChange = (value: any) => {
       console.log(value);
     };
