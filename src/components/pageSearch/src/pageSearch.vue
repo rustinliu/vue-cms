@@ -32,15 +32,14 @@ export default defineComponent({
     }
   },
   components: { PfForm },
-  setup() {
+  setup(props) {
+    const formItems = props.searchFormConfig?.formItems ?? [];
+    const itemOrigins: any = {};
+    for (let item of formItems) {
+      itemOrigins[item.field] = "";
+    }
     // 对象的双向绑定 要使用ref
-    const formData = ref({
-      id: "",
-      username: "",
-      password: "",
-      sport: "",
-      createTime: ""
-    });
+    const formData = ref(itemOrigins);
     return { formData };
   }
 });

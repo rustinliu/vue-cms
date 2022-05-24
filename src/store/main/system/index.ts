@@ -15,7 +15,7 @@ const systemStore: Module<ISystemStore, IRootStore> = {
     changeUsersList(state, list: any[]) {
       state.usersList = list;
     },
-    changeUserCount(state, count: number) {
+    changeUsersCount(state, count: number) {
       state.usersCount = count;
     },
     changeRoleList(state, list: any[]) {

@@ -15,20 +15,6 @@ const searchFormConfig: IForm = {
       placeholder: "用户名"
     },
     {
-      field: "password",
-      type: "password",
-      placeholder: "密码"
-    },
-    {
-      field: "sport",
-      type: "select",
-      placeholder: "喜欢的运动",
-      selectOptions: [
-        { title: "篮球", value: "basketball" },
-        { title: "足球", value: "football" }
-      ]
-    },
-    {
       field: "createTime",
       type: "datepicker",
       dateOptions: {
