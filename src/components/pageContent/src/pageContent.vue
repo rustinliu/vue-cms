@@ -60,7 +60,7 @@ export default defineComponent({
     });
     const dataList = computed(() => store.getters[`system/pageListData`](props.pageName));
     const selectChange = (value: any) => {
-      console.log(value);
+      console.log(value, 111);
     };
     return {
       dataList,

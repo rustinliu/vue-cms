@@ -80,7 +80,7 @@ export default defineComponent({
         xs: 24,
         sm: 24,
         md: 12,
-        lg: 8,
+        lg: 4,
         xl: 4
       })
     }

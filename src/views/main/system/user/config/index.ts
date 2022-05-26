@@ -10,30 +10,30 @@ const searchFormConfig: IForm = {
       placeholder: "id"
     },
     {
-      field: "username",
+      field: "realname",
       type: "input",
-      placeholder: "用户名"
+      placeholder: "真实姓名"
     },
     {
-      field: "password",
-      type: "password",
-      placeholder: "密码"
+      field: "cellphone",
+      type: "input",
+      placeholder: "手机号"
     },
     {
-      field: "sport",
+      field: "enable",
       type: "select",
-      placeholder: "喜欢的运动",
+      placeholder: "用户状态",
       selectOptions: [
-        { title: "篮球", value: "basketball" },
-        { title: "足球", value: "football" }
+        { title: "启用", value: 1 },
+        { title: "禁用", value: 0 }
       ]
     },
     {
-      field: "createTime",
+      field: "createAt",
       type: "datepicker",
       dateOptions: {
-        startPlaceholder: "开始时间",
-        endPlaceholder: "结束时间",
+        startPlaceholder: "开始",
+        endPlaceholder: "结束",
         type: "daterange"
       }
     }
@@ -47,7 +47,7 @@ const contentTableConfig: ITable = {
   propListConfig: [
     { prop: "name", label: "用户名", minWidth: "100" },
     { prop: "realname", label: "真实姓名", minWidth: "100" },
-    { prop: "cellphone", label: "手机号码", minWidth: "100" },
+    { prop: "cellphone", label: "手机号", minWidth: "100" },
     { prop: "enable", label: "状态", minWidth: "100", slotName: "status" },
     { prop: "createAt", label: "创建时间", minWidth: "250", slotName: "createAt" },
     { prop: "updateAt", label: "更新时间", minWidth: "250", slotName: "updateAt" },
