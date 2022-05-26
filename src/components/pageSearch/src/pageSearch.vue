@@ -32,7 +32,8 @@ export default defineComponent({
     }
   },
   components: { PfForm },
-  setup(props) {
+  emits: ["resetBtnClick", "queryBtnClick"],
+  setup(props, { emit }) {
     const formItems = props.searchFormConfig?.formItems ?? [];
     const formOriginData: any = {};
     for (const item of formItems) {
@@ -42,11 +43,11 @@ export default defineComponent({
     const formData = ref(formOriginData);
 
     const handleReset = () => {
-      console.log("重置");
       formData.value = formOriginData;
+      emit("resetBtnClick");
     };
     const handleSearch = () => {
-      console.log("搜索");
+      emit("queryBtnClick", formData.value);
     };
     return {
       formData,

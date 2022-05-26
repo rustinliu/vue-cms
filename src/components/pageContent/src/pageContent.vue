@@ -51,20 +51,26 @@ export default defineComponent({
   },
   setup(props) {
     const store = useStore();
-    store.dispatch("system/fetchPageListActions", {
-      pageName: props.pageName,
-      queryInfo: {
-        offset: 0,
-        size: 10
-      }
-    });
+    const getPageData = (queryInfo: any = {}) => {
+      store.dispatch("system/fetchPageListActions", {
+        pageName: props.pageName,
+        queryInfo: {
+          offset: 0,
+          size: 10,
+          ...queryInfo
+        }
+      });
+    };
+    getPageData();
+
     const dataList = computed(() => store.getters[`system/pageListData`](props.pageName));
     const selectChange = (value: any) => {
       console.log(value, 111);
     };
     return {
       dataList,
-      selectChange
+      selectChange,
+      getPageData
     };
   }
 });
