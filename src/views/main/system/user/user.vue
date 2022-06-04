@@ -24,7 +24,7 @@ export default defineComponent({
   name: "user",
   components: { PageContent, PageSearch },
   setup() {
-    const [handleResetClick, handleQueryClick, pageContentRef] = usePageSearchAndContent();
+    const { handleResetClick, handleQueryClick, pageContentRef } = usePageSearchAndContent();
     return {
       searchFormConfig,
       contentTableConfig,

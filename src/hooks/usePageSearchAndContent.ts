@@ -10,7 +10,7 @@ const usePageSearchAndContent = () => {
     pageContentRef.value?.getPageData(queryInfo);
   };
 
-  return [handleQueryClick, handleResetClick, pageContentRef];
+  return { handleResetClick, handleQueryClick, pageContentRef }; // k坑， 后边解析时 顺序不能错
 };
 
 export default usePageSearchAndContent;

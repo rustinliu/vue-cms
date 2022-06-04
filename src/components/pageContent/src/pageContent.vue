@@ -1,6 +1,12 @@
 <template>
   <div>
-    <pf-table :list-data="dataList" v-bind="contentTableConfig" @selectChange="selectChange">
+    <pf-table
+      :list-data="dataList"
+      :list-count="dataCount"
+      v-bind="contentTableConfig"
+      @selectChange="selectChange"
+      v-model:page="pageInfo"
+    >
       <template #headerHandle>
         <div>
           <el-button type="primary" size="medium">新建用户</el-button>
@@ -33,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, ref, watch } from "vue";
 import { useStore } from "@/store";
 import PfTable from "@/components/commonTable";
 
@@ -51,12 +57,19 @@ export default defineComponent({
   },
   setup(props) {
     const store = useStore();
+
+    // 双向绑定page
+    const pageInfo = ref({ currentPage: 0, pageSize: 10 });
+    watch(pageInfo, () => {
+      getPageData();
+    });
+
     const getPageData = (queryInfo: any = {}) => {
       store.dispatch("system/fetchPageListActions", {
         pageName: props.pageName,
         queryInfo: {
-          offset: 0,
-          size: 10,
+          offset: pageInfo.value.pageSize * pageInfo.value.currentPage,
+          size: pageInfo.value.pageSize,
           ...queryInfo
         }
       });
@@ -64,13 +77,16 @@ export default defineComponent({
     getPageData();
 
     const dataList = computed(() => store.getters[`system/pageListData`](props.pageName));
+    const dataCount = computed(() => store.getters[`system/pageListCount`](props.pageName));
     const selectChange = (value: any) => {
       console.log(value, 111);
     };
     return {
       dataList,
+      dataCount,
       selectChange,
-      getPageData
+      getPageData,
+      pageInfo
     };
   }
 });

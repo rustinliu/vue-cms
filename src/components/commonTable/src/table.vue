@@ -37,11 +37,11 @@
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page="currentPage4"
-          :page-sizes="[100, 200, 300, 400]"
-          :page-size="100"
+          :current-page="page.currentPage"
+          :page-sizes="[10, 20, 30]"
+          :page-size="page.pageSize"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="400"
+          :total="listCount"
         >
         </el-pagination>
       </slot>
@@ -62,6 +62,10 @@ export default defineComponent({
       type: Array,
       required: true
     },
+    listCount: {
+      type: Number,
+      default: 0
+    },
     propListConfig: {
       type: Array,
       required: true
@@ -73,14 +77,30 @@ export default defineComponent({
     isShowSelectColumn: {
       type: Boolean,
       default: false
+    },
+    page: {
+      type: Object,
+      default: () => ({ currentPage: 0, pageSize: 10 })
     }
   },
-  emits: ["selectChange"],
+  emits: ["selectChange", "update:page"],
   setup(props, { emit }) {
     const handleSelectChange = (value: any) => {
       emit("selectChange", value);
     };
-    return { handleSelectChange };
+
+    const handleSizeChange = (pageSize: number) => {
+      emit("update:page", { ...props.page, pageSize });
+    };
+    const handleCurrentChange = (currentPage: number) => {
+      emit("update:page", { ...props.page, currentPage });
+    };
+
+    return {
+      handleSelectChange,
+      handleSizeChange,
+      handleCurrentChange
+    };
   }
 });
 </script>

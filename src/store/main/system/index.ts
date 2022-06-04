@@ -30,6 +30,11 @@ const systemStore: Module<ISystemStore, IRootStore> = {
       return (pageName: string) => {
         return (state as any)[`${pageName}List`];
       };
+    },
+    pageListCount(state) {
+      return (pageName: string) => {
+        return (state as any)[`${pageName}Count`];
+      };
     }
   },
   actions: {
