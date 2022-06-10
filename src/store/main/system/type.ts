@@ -3,6 +3,8 @@ export interface ISystemStore {
   usersCount: number;
   roleList: any[];
   roleCount: number;
+  goodsList: any[];
+  goodsCount: number;
 }
 
 export interface IPagePayload {

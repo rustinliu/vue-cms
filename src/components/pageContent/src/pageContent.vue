@@ -15,11 +15,6 @@
       </template>
 
       <!-- 表格插槽 -->
-      <template #status="scope">
-        <el-button plain size="mini" :type="scope.row.enable ? 'success' : 'danger'">
-          {{ scope.row.enable ? "启用" : "禁用" }}
-        </el-button>
-      </template>
       <template #createAt="scope">
         <span> {{ $filters.formatTime(scope.row.createAt) }} </span>
       </template>
@@ -34,6 +29,13 @@
           </el-button>
         </div>
       </template>
+
+      <!-- 在page-content中动态插入剩余的插槽 -->
+      <template v-for="item in otherPropList" :key="item.prop" #[item.slotName]="scope">
+        <template v-if="item.slotName">
+          <slot :name="item.slotName" :row="scope.row"></slot>
+        </template>
+      </template>
     </pf-table>
   </div>
 </template>
@@ -42,6 +44,7 @@
 import { computed, defineComponent, ref, watch } from "vue";
 import { useStore } from "@/store";
 import PfTable from "@/components/commonTable";
+import { IPropListConfig } from "@/components/commonTable/type";
 
 export default defineComponent({
   components: { PfTable },
@@ -81,12 +84,22 @@ export default defineComponent({
     const selectChange = (value: any) => {
       console.log(value, 111);
     };
+
+    // 获取其他的动态插槽名称
+    const otherPropList = props.contentTableConfig?.propListConfig.filter(
+      (item: IPropListConfig) => {
+        if (item.slotName === "createAt") return false;
+        if (item.slotName === "updateAt") return false;
+        return item.slotName !== "handler";
+      }
+    );
     return {
       dataList,
       dataCount,
       selectChange,
       getPageData,
-      pageInfo
+      pageInfo,
+      otherPropList
     };
   }
 });

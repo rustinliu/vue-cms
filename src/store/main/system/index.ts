@@ -9,7 +9,9 @@ const systemStore: Module<ISystemStore, IRootStore> = {
     usersList: [],
     usersCount: 0,
     roleList: [],
-    roleCount: 0
+    roleCount: 0,
+    goodsList: [],
+    goodsCount: 0
   }),
   mutations: {
     changeUsersList(state, list: any[]) {
@@ -23,6 +25,12 @@ const systemStore: Module<ISystemStore, IRootStore> = {
     },
     changeRoleCount(state, count: number) {
       state.roleCount = count;
+    },
+    changeGoodsList(state, list: any[]) {
+      state.goodsList = list;
+    },
+    changeGoodsCount(state, count: number) {
+      state.goodsCount = count;
     }
   },
   getters: {
@@ -40,8 +48,6 @@ const systemStore: Module<ISystemStore, IRootStore> = {
   actions: {
     async fetchPageListActions({ commit }, payload: IPagePayload) {
       const pageName = payload.pageName;
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       const pageUrl = `/${pageName}/list`;
       const pageResult = await fetchPageListData(pageUrl, payload.queryInfo);
 
