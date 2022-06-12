@@ -8,7 +8,13 @@
         </span>
       </slot>
     </section>
-    <el-table :data="listData" stripe style="width: 100%" @selection-change="handleSelectChange">
+    <el-table
+      v-bind="childrenProps"
+      :data="listData"
+      stripe
+      style="width: 100%"
+      @selection-change="handleSelectChange"
+    >
       <el-table-column
         v-if="isShowSelectColumn"
         type="selection"
@@ -32,7 +38,7 @@
         </el-table-column>
       </template>
     </el-table>
-    <section class="footer">
+    <section class="footer" v-if="isShowFooter">
       <slot name="footer">
         <el-pagination
           @size-change="handleSizeChange"
@@ -78,9 +84,17 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
+    childrenProps: {
+      type: Object,
+      default: () => ({})
+    },
     page: {
       type: Object,
       default: () => ({ currentPage: 0, pageSize: 10 })
+    },
+    isShowFooter: {
+      type: Boolean,
+      default: true
     }
   },
   emits: ["selectChange", "update:page"],

@@ -10,6 +10,8 @@ const systemStore: Module<ISystemStore, IRootStore> = {
     usersCount: 0,
     roleList: [],
     roleCount: 0,
+    menuList: [],
+    menuCount: 0,
     goodsList: [],
     goodsCount: 0
   }),
@@ -25,6 +27,12 @@ const systemStore: Module<ISystemStore, IRootStore> = {
     },
     changeRoleCount(state, count: number) {
       state.roleCount = count;
+    },
+    changeMenuList(state, list: any[]) {
+      state.menuList = list;
+    },
+    changeMenuCount(state, count: number) {
+      state.menuCount = count;
     },
     changeGoodsList(state, list: any[]) {
       state.goodsList = list;
