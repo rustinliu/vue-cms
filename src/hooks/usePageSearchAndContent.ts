@@ -7,6 +7,8 @@ const usePageSearchAndContent = () => {
     pageContentRef.value?.getPageData();
   };
   const handleQueryClick = (queryInfo: any) => {
+    console.log("fuck queryInfo", queryInfo);
+    console.log("pageContentRef", pageContentRef.value);
     pageContentRef.value?.getPageData(queryInfo);
   };
 

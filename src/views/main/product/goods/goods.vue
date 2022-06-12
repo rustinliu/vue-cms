@@ -24,6 +24,9 @@
           {{ scope.row.status ? "上架中" : "下架中" }}
         </el-button>
       </template>
+      <template #address="scope">
+        <span> {{ scope.row.address }} </span>
+      </template>
     </page-content>
   </div>
 </template>

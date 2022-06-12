@@ -7,30 +7,22 @@ const searchFormConfig: IForm = {
     {
       field: "id",
       type: "input",
-      placeholder: "id"
+      placeholder: "角色id"
     },
     {
-      field: "username",
+      field: "name",
       type: "input",
-      placeholder: "用户名"
-    },
-    {
-      field: "createTime",
-      type: "datepicker",
-      dateOptions: {
-        startPlaceholder: "开始时间",
-        endPlaceholder: "结束时间",
-        type: "daterange"
-      }
+      placeholder: "角色名"
     }
   ]
 };
 
 const contentTableConfig: ITable = {
   title: "角色列表",
-  isShowIndexColumn: true,
+  isShowIndexColumn: false,
   isShowSelectColumn: true,
   propListConfig: [
+    { prop: "id", label: "角色ID", minWidth: "100" },
     { prop: "name", label: "角色名", minWidth: "100" },
     { prop: "intro", label: "权限", minWidth: "100" },
     { prop: "createAt", label: "创建时间", minWidth: "250", slotName: "createAt" },
