@@ -8,10 +8,9 @@
       v-model:page="pageInfo"
     >
       <template #headerHandle>
-        <div>
-          <el-button type="primary" size="medium">新建用户</el-button>
-          <el-button icon="el-icon-refresh"></el-button>
-        </div>
+        <el-button v-if="isCreate" type="primary" size="medium">
+          {{ "新建" + contentTableConfig.title.slice(0, -2) }}
+        </el-button>
       </template>
 
       <!-- 表格插槽 -->
@@ -23,8 +22,14 @@
       </template>
       <template #handler>
         <div>
-          <el-button type="text" size="mini" icon="el-icon-edit">编辑</el-button>
-          <el-button type="text" size="mini" icon="el-icon-delete" style="color: red">
+          <el-button v-if="isUpdate" type="text" size="mini" icon="el-icon-edit">编辑</el-button>
+          <el-button
+            v-if="isDelete"
+            type="text"
+            size="mini"
+            icon="el-icon-delete"
+            style="color: red"
+          >
             删除
           </el-button>
         </div>
@@ -45,6 +50,7 @@ import { computed, defineComponent, ref, watch } from "vue";
 import { useStore } from "@/store";
 import PfTable from "@/components/commonTable";
 import { IPropListConfig } from "@/components/commonTable/type";
+import { usePermission } from "@/hooks/usePermission";
 
 export default defineComponent({
   components: { PfTable },
@@ -61,6 +67,12 @@ export default defineComponent({
   setup(props) {
     const store = useStore();
 
+    // 获取操作权限
+    const isCreate = usePermission(props.pageName, "create");
+    const isUpdate = usePermission(props.pageName, "update");
+    const isDelete = usePermission(props.pageName, "delete");
+    const isQuery = usePermission(props.pageName, "query");
+
     // 双向绑定page
     const pageInfo = ref({ currentPage: 0, pageSize: 10 });
     watch(pageInfo, () => {
@@ -68,6 +80,7 @@ export default defineComponent({
     });
 
     const getPageData = (queryInfo: any = {}) => {
+      if (!isQuery) return;
       store.dispatch("system/fetchPageListActions", {
         pageName: props.pageName,
         queryInfo: {
@@ -99,7 +112,10 @@ export default defineComponent({
       selectChange,
       getPageData,
       pageInfo,
-      otherPropList
+      otherPropList,
+      isCreate,
+      isUpdate,
+      isDelete
     };
   }
 });

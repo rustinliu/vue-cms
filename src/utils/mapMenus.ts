@@ -58,4 +58,21 @@ const pathMapToBreadcrumb = (userMenus: IUserMenuItem[], currentPath: string): I
   return breadcrumbs;
 };
 
-export { mapMenusToRoutes, pathMapToMenus, pathMapToBreadcrumb, firstMenu };
+const mapMenusToPermissions = (userMenus: IUserMenuItem[]) => {
+  const permissions: string[] = [];
+
+  const _recurseGetPermissions = (menus: IUserMenuItem[]) => {
+    for (const menu of menus) {
+      if (menu.type === 1 || menu.type === 2) {
+        _recurseGetPermissions(menu.children ?? []);
+      } else if (menu.type === 3) {
+        permissions.push(menu.permission);
+      }
+    }
+  };
+
+  _recurseGetPermissions(userMenus);
+  return permissions;
+};
+
+export { mapMenusToRoutes, pathMapToMenus, pathMapToBreadcrumb, firstMenu, mapMenusToPermissions };

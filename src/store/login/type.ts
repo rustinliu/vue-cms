@@ -2,6 +2,7 @@ export interface ILoginStore {
   token: string;
   userInfo: any;
   userMenus: IUserMenuItem[];
+  permissions: string[];
 }
 
 export interface IUserMenuItem {
@@ -12,5 +13,6 @@ export interface IUserMenuItem {
   icon: string;
   sort: number;
   parentId?: number;
+  permission: string;
   children: IUserMenuItem[];
 }

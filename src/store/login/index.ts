@@ -2,7 +2,7 @@ import type { Module } from "vuex";
 import type { ILoginStore, IUserMenuItem } from "./type";
 import type { IRootStore } from "@/store/type";
 import type { IAccount } from "@/service/login/type";
-import { mapMenusToRoutes } from "@/utils/mapMenus";
+import { mapMenusToPermissions, mapMenusToRoutes } from "@/utils/mapMenus";
 
 import { fetchUserInfo, fetchUserMenusByRoleId, loginAccount } from "@/service/login/loginApi";
 import localCache from "@/utils/cache";
@@ -14,7 +14,8 @@ const loginStore: Module<ILoginStore, IRootStore> = {
   state: () => ({
     token: "",
     userInfo: {},
-    userMenus: []
+    userMenus: [],
+    permissions: []
   }),
   getters: {},
   mutations: {
@@ -29,6 +30,8 @@ const loginStore: Module<ILoginStore, IRootStore> = {
       const routes = mapMenusToRoutes(userMenus);
 
       routes.forEach((route) => router.addRoute("main", route));
+
+      state.permissions = mapMenusToPermissions(userMenus);
     }
   },
   actions: {
