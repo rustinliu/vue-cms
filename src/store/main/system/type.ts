@@ -9,7 +9,12 @@ export interface ISystemStore {
   goodsCount: number;
 }
 
-export interface IPagePayload {
+export interface IPagePayloadFetch {
   pageName: string;
   queryInfo: any;
+}
+
+export interface IPagePayloadDelete {
+  pageName: string;
+  id: number;
 }

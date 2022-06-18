@@ -20,15 +20,24 @@
       <template #updateAt="scope">
         <span> {{ $filters.formatTime(scope.row.updateAt) }} </span>
       </template>
-      <template #handler>
+      <template #handler="scope">
         <div>
-          <el-button v-if="isUpdate" type="text" size="mini" icon="el-icon-edit">编辑</el-button>
+          <el-button
+            v-if="isUpdate"
+            type="text"
+            size="mini"
+            icon="el-icon-edit"
+            @click="editPageData(scope.row)"
+          >
+            编辑
+          </el-button>
           <el-button
             v-if="isDelete"
             type="text"
             size="mini"
             icon="el-icon-delete"
             style="color: red"
+            @click="deletePageData(scope.row)"
           >
             删除
           </el-button>
@@ -51,6 +60,7 @@ import { useStore } from "@/store";
 import PfTable from "@/components/commonTable";
 import { IPropListConfig } from "@/components/commonTable/type";
 import { usePermission } from "@/hooks/usePermission";
+import { useMessageBox } from "@/hooks/useMessageBox";
 
 export default defineComponent({
   components: { PfTable },
@@ -81,7 +91,7 @@ export default defineComponent({
 
     const getPageData = (queryInfo: any = {}) => {
       if (!isQuery) return;
-      store.dispatch("system/fetchPageListActions", {
+      store.dispatch("system/fetchPageListAction", {
         pageName: props.pageName,
         queryInfo: {
           offset: (pageInfo.value.pageSize - 1) * pageInfo.value.currentPage,
@@ -106,6 +116,27 @@ export default defineComponent({
         return item.slotName !== "handler";
       }
     );
+
+    // 删除/编辑/新建 操作
+    const deletePageData = (item: any) => {
+      const thenFn = () => {
+        store.dispatch("system/deletePageDataAction", {
+          pageName: props.pageName,
+          id: item.id
+        });
+      };
+      useMessageBox(
+        {
+          titleContent: "确定删除吗？",
+          thenMessage: "删除成功！",
+          catchMessage: "已取消删除"
+        },
+        thenFn
+      );
+    };
+    const editPageData = (item: any) => {
+      console.log("edit item", item);
+    };
     return {
       dataList,
       dataCount,
@@ -115,7 +146,9 @@ export default defineComponent({
       otherPropList,
       isCreate,
       isUpdate,
-      isDelete
+      isDelete,
+      deletePageData,
+      editPageData
     };
   }
 });

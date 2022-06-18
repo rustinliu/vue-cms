@@ -7,3 +7,9 @@ export const fetchPageListData = (url: string, queryInfo: any) => {
     data: queryInfo
   });
 };
+
+export const deletePageData = (url: string) => {
+  return request.delete<IDataType>({
+    url
+  });
+};

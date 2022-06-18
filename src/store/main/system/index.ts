@@ -1,7 +1,7 @@
 import type { Module } from "vuex";
-import { IPagePayload, ISystemStore } from "./type";
+import { IPagePayloadDelete, IPagePayloadFetch, ISystemStore } from "./type";
 import { IRootStore } from "@/store/type";
-import { fetchPageListData } from "@/service/main/system/systemApi";
+import { deletePageData, fetchPageListData } from "@/service/main/system/systemApi";
 
 const systemStore: Module<ISystemStore, IRootStore> = {
   namespaced: true,
@@ -54,7 +54,7 @@ const systemStore: Module<ISystemStore, IRootStore> = {
     }
   },
   actions: {
-    async fetchPageListActions({ commit }, payload: IPagePayload) {
+    async fetchPageListAction({ commit }, payload: IPagePayloadFetch) {
       const pageName = payload.pageName;
       const pageUrl = `/${pageName}/list`;
       const pageResult = await fetchPageListData(pageUrl, payload.queryInfo);
@@ -65,6 +65,23 @@ const systemStore: Module<ISystemStore, IRootStore> = {
       const pageNameToCase = pageName.replace(pageName[0], pageName[0].toUpperCase());
       commit(`change${pageNameToCase}List`, list);
       commit(`change${pageNameToCase}Count`, totalCount);
+    },
+
+    async deletePageDataAction({ dispatch }, payload: IPagePayloadDelete) {
+      const { pageName, id } = payload;
+      const pageUrl = `/${pageName}/${id}`;
+
+      // 调用删除接口
+      await deletePageData(pageUrl);
+
+      // 再次调用获取接口
+      dispatch("fetchPageListAction", {
+        pageName,
+        queryInfo: {
+          offset: 0,
+          size: 10
+        }
+      });
     }
   }
 };

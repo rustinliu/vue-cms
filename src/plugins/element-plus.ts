@@ -34,7 +34,9 @@ import {
   ElTable,
   ElTableColumn,
   ElPagination,
-  ElImage
+  ElImage,
+  ElPopover,
+  ElMessageBox
 } from "element-plus";
 
 const components = [
@@ -71,11 +73,15 @@ const components = [
   ElTable,
   ElTableColumn,
   ElPagination,
-  ElImage
+  ElImage,
+  ElPopover,
+  ElMessageBox
 ];
 
 export default function registerElementPlus(app: App): void {
   app.config.globalProperties.$ElMessage = ElMessage;
+  app.config.globalProperties.$ElMessageBox = ElMessageBox;
+
   for (const component of components) {
     app.component(component.name, component);
   }
