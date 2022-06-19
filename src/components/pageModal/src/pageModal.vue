@@ -13,20 +13,32 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
-import PfForm from "@/components/commonForm";
+import { defineComponent, PropType, ref, watch } from "vue";
+import PfForm, { IForm } from "@/components/commonForm";
 
 export default defineComponent({
   components: { PfForm },
   props: {
     modalConfig: {
-      type: Object,
+      type: Object as PropType<IForm>,
       required: true
+    },
+    defaultInfo: {
+      type: Object,
+      default: () => ({})
     }
   },
-  setup() {
-    const dialogVisible = ref(true);
-    const formData = ref({});
+  setup(props) {
+    const dialogVisible = ref(false);
+    const formData = ref<any>({});
+    watch(
+      () => props.defaultInfo,
+      (newValue) => {
+        for (const item of props.modalConfig.formItems) {
+          formData.value[`${item.field}`] = newValue[`${item.field}`];
+        }
+      }
+    );
     return {
       dialogVisible,
       formData

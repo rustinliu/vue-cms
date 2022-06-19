@@ -70,12 +70,6 @@ const modalConfig: IForm = {
       placeholder: "请输入真实姓名"
     },
     {
-      field: "password",
-      type: "password",
-      label: "用户密码",
-      placeholder: "请输入密码"
-    },
-    {
       field: "cellphone",
       type: "input",
       label: "电话号码",

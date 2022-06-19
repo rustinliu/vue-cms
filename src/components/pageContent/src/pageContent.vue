@@ -8,7 +8,7 @@
       v-model:page="pageInfo"
     >
       <template #headerHandle>
-        <el-button v-if="isCreate" type="primary" size="medium">
+        <el-button v-if="isCreate" type="primary" size="medium" @click="addPageData">
           {{ "新建" + contentTableConfig.title.slice(0, -2) }}
         </el-button>
       </template>
@@ -74,7 +74,8 @@ export default defineComponent({
       required: true
     }
   },
-  setup(props) {
+  emits: ["editBtnClick", "addBtnClick"],
+  setup(props, { emit }) {
     const store = useStore();
 
     // 获取操作权限
@@ -136,6 +137,10 @@ export default defineComponent({
     };
     const editPageData = (item: any) => {
       console.log("edit item", item);
+      emit("editBtnClick", item);
+    };
+    const addPageData = () => {
+      emit("addBtnClick");
     };
     return {
       dataList,
@@ -148,7 +153,8 @@ export default defineComponent({
       isUpdate,
       isDelete,
       deletePageData,
-      editPageData
+      editPageData,
+      addPageData
     };
   }
 });
