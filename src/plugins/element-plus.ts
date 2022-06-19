@@ -36,7 +36,8 @@ import {
   ElPagination,
   ElImage,
   ElPopover,
-  ElMessageBox
+  ElMessageBox,
+  ElDialog
 } from "element-plus";
 
 const components = [
@@ -75,7 +76,8 @@ const components = [
   ElPagination,
   ElImage,
   ElPopover,
-  ElMessageBox
+  ElMessageBox,
+  ElDialog
 ];
 
 export default function registerElementPlus(app: App): void {
