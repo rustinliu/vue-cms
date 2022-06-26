@@ -1,21 +1,23 @@
 import { ref } from "vue";
 import PageModal from "@/components/pageModal/src/pageModal.vue";
 
-const usePageModal = () => {
+type CallBackFn = () => void;
+const usePageModal = (editCb?: CallBackFn, addCb?: CallBackFn) => {
   const pageModalRef = ref<InstanceType<typeof PageModal>>();
   const defaultInfo = ref({});
   const editPageData = (item: any) => {
-    console.log("user item", item);
     defaultInfo.value = { ...item };
     if (pageModalRef.value) {
       pageModalRef.value.dialogVisible = true;
     }
+    editCb && editCb();
   };
   const addPageData = () => {
-    console.log("点击了 新建");
+    defaultInfo.value = {};
     if (pageModalRef.value) {
       pageModalRef.value.dialogVisible = true;
     }
+    addCb && addCb();
   };
   return { pageModalRef, defaultInfo, editPageData, addPageData };
 };

@@ -8,6 +8,7 @@ export interface IFormItem {
   placeholder?: string;
   selectOptions?: any[];
   dateOptions?: any;
+  isHidden?: boolean;
 }
 
 export interface IForm {
