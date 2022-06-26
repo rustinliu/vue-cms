@@ -86,13 +86,15 @@ const modalConfig: IForm = {
       field: "departmentId",
       type: "select",
       label: "选择部门",
-      placeholder: "请选择部门"
+      placeholder: "请选择部门",
+      selectOptions: []
     },
     {
       field: "roleId",
       type: "select",
       label: "选择角色",
-      placeholder: "请选择角色"
+      placeholder: "请选择角色",
+      selectOptions: []
     }
   ],
   colLayout: { span: 24 },

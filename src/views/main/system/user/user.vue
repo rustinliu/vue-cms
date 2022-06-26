@@ -18,12 +18,13 @@
         </el-button>
       </template>
     </page-content>
-    <page-modal ref="pageModalRef" :modal-config="modalConfig" :defaultInfo="defaultInfo" />
+    <page-modal ref="pageModalRef" :modal-config="modalConfigRef" :defaultInfo="defaultInfo" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { computed, defineComponent } from "vue";
+import { useStore } from "@/store";
 
 import PageSearch from "@/components/pageSearch";
 import PageContent from "@/components/pageContent/src/pageContent.vue";
@@ -52,10 +53,25 @@ export default defineComponent({
       editCallback,
       addCallback
     );
+
+    // 动态添加角色和部门
+    const store = useStore();
+    const modalConfigRef = computed(() => {
+      const departmentItem = modalConfig.formItems.find((item) => item.field === "departmentId");
+      departmentItem!.selectOptions = store.state.entireDepartment.map((item: any) => {
+        return { title: item.name, value: item.id };
+      });
+
+      const roleItem = modalConfig.formItems.find((item) => item.field === "roleId");
+      roleItem!.selectOptions = store.state.entireRole.map((item: any) => {
+        return { title: item.name, value: item.id };
+      });
+      return modalConfig;
+    });
     return {
       searchFormConfig,
       contentTableConfig,
-      modalConfig,
+      modalConfigRef,
       pageContentRef,
       pageModalRef,
       handleResetClick,
