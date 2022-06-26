@@ -3,6 +3,8 @@ import { ISystemStore } from "@/store/main/system/type";
 
 export interface IRootStore {
   name: string;
+  entireDepartment: string[];
+  entireRole: string[];
 }
 
 export interface IRootWithModules {
